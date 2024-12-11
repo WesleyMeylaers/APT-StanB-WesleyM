@@ -7,29 +7,29 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # Gebruik een stabiele Ubuntu-versie
 
     steps:
     # Stap 1: Checkout de code
     - name: Checkout code
       uses: actions/checkout@v3
-      # tussenstap
+
+    # Stap 2: Installeer Docker Compose
     - name: Install Docker Compose
       run: |
         sudo apt-get update
-        sudo apt-get install docker-compose-plugin -y
-
-    # Stap 2: Installeer Docker Compose
-    - name: Set up Docker Compose
-      run: sudo apt-get install docker-compose -y
+        sudo apt-get install -y docker.io
+        sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        docker-compose --version
 
     # Stap 3: Bouw de Docker Images
-    - name: Build and Push Docker Images
+    - name: Build Docker Images
       run: |
         docker-compose -f docker-compose.yml build
 
     # Stap 4: Deploy de Containers
     - name: Deploy Containers
       run: |
-        docker-compose down || true
+        docker-compose down
         docker-compose up -d
