@@ -1,56 +1,42 @@
 version: '3.8'
 
 services:
-  user-service:
-    build:
-      context: ./user-service
-    ports:
-      - "8081:8081"
-    container_name: user-service
-    networks:
-      - backend
-
-  artist-service:
-    build:
-      context: ./artist-service
-    ports:
-      - "8082:8082"
-    container_name: artist-service
-    networks:
-      - backend
-
-  album-service:
-    build:
-      context: ./album-service
-    ports:
-      - "8083:8083"
-    container_name: album-service
-    networks:
-      - backend
-
-  playlist-service:
-    build:
-      context: ./playlist-service
-    ports:
-      - "8084:8084"
-    container_name: playlist-service
-    networks:
-      - backend
-
   api-gateway:
+    image: api-gateway-image
     build:
       context: ./api-gateway
     ports:
-      - "8085:8085"
-    container_name: api-gateway
-    networks:
-      - backend
+      - "8083:8083"
     depends_on:
       - user-service
       - artist-service
       - album-service
       - playlist-service
 
-networks:
-  backend:
-    driver: bridge
+  user-service:
+    image: user-service-image
+    build:
+      context: ./user-service
+    ports:
+      - "8080:8080"
+
+  artist-service:
+    image: artist-service-image
+    build:
+      context: ./artist-service
+    ports:
+      - "8081:8081"
+
+  album-service:
+    image: album-service-image
+    build:
+      context: ./album-service
+    ports:
+      - "8082:8082"
+
+  playlist-service:
+    image: playlist-service-image
+    build:
+      context: ./playlist-service
+    ports:
+      - "8084:8084"

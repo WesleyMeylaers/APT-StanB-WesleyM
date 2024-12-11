@@ -1,5 +1,5 @@
 server:
-  port: 8085  # Poort voor de API Gateway
+  port: 8083
 
 logging:
   level:
@@ -9,50 +9,38 @@ logging:
     reactor.netty: TRACE
 
 spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: ${GOOGLE_CLIENTID}  # Vul in met je Google OAuth-client-id
-            client-secret: ${GOOGLE_CLIENTSECRET}  # Vul in met je Google OAuth-client-secret
-            scope: openid,profile,email
-      resourceserver:
-        jwt:
-          issuer-uri: https://accounts.google.com
-          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
-
   cloud:
     gateway:
       routes:
-        # Route naar de User Service
         - id: user-service
-          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          uri: http://${USER_SERVICE_BASEURL:localhost:8080}
           predicates:
-            - Path=/user/**
+            - Path=/user
+            - Method=GET
           filters:
             - SetPath=/api/user
 
-        # Route naar de Artist Service
         - id: artist-service
-          uri: http://${ARTIST_SERVICE_BASEURL:localhost:8082}
+          uri: http://${ARTIST_SERVICE_BASEURL:localhost:8081}
           predicates:
-            - Path=/artist/**
+            - Path=/artist
+            - Method=GET
           filters:
             - SetPath=/api/artist
 
-        # Route naar de Album Service
         - id: album-service
-          uri: http://${ALBUM_SERVICE_BASEURL:localhost:8083}
+          uri: http://${ALBUM_SERVICE_BASEURL:localhost:8082}
           predicates:
-            - Path=/album/**
+            - Path=/album
+            - Method=GET
           filters:
             - SetPath=/api/album
 
-        # Route naar de Playlist Service
         - id: playlist-service
           uri: http://${PLAYLIST_SERVICE_BASEURL:localhost:8084}
           predicates:
-            - Path=/playlist/**
+            - Path=/playlist
+            - Method=GET
           filters:
             - SetPath=/api/playlist
+

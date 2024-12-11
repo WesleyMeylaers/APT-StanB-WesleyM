@@ -1,0 +1,30 @@
+name: Docker Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Stap 1: Checkout de code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Stap 2: Installeer Docker Compose
+    - name: Set up Docker Compose
+      run: sudo apt-get install docker-compose -y
+
+    # Stap 3: Bouw de Docker Images
+    - name: Build and Push Docker Images
+      run: |
+        docker-compose -f docker-compose.yml build
+
+    # Stap 4: Deploy de Containers
+    - name: Deploy Containers
+      run: |
+        docker-compose down || true
+        docker-compose up -d
