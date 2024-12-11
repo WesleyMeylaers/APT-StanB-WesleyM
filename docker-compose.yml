@@ -22,30 +22,37 @@ jobs:
 
       # Stap 3: Log in bij Docker Hub
       - name: Docker login
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
 
       # Stap 4: Bouw en push alle services
       - name: Build and Push Services
+        env:
+            DOCKER_USER: ${{ secrets.DOCKER_USER }}
+            DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           # Bouw en push api-gateway
-          docker build -t ${{ secrets.DOCKER_USER }}/api-gateway-image ./api-gateway
-          docker push ${{ secrets.DOCKER_USER }}/api-gateway-image
+          docker build -t "DOCKER_USER"/api-gateway-image ./api-gateway
+          docker push "DOCKER_USER"/api-gateway-image
 
           # Bouw en push user-service
-          docker build -t ${{ secrets.DOCKER_USER }}/user-service-image ./user-service
-          docker push ${{ secrets.DOCKER_USER }}/user-service-image
+          docker build -t "DOCKER_USER"/user-service-image ./user-service
+          docker push "DOCKER_USER"/user-service-image
 
           # Bouw en push artist-service
-          docker build -t ${{ secrets.DOCKER_USER }}/artist-service-image ./artist-service
-          docker push ${{ secrets.DOCKER_USER }}/artist-service-image
+          docker build -t "DOCKER_USER"/artist-service-image ./artist-service
+          docker push "DOCKER_USER"/artist-service-image
 
           # Bouw en push album-service
-          docker build -t ${{ secrets.DOCKER_USER }}/album-service-image ./album-service
-          docker push ${{ secrets.DOCKER_USER }}/album-service-image
+          docker build -t "DOCKER_USER"/album-service-image ./album-service
+          docker push "DOCKER_USER"/album-service-image
 
           # Bouw en push playlist-service
-          docker build -t ${{ secrets.DOCKER_USER }}/playlist-service-image ./playlist-service
-          docker push ${{ secrets.DOCKER_USER }}/playlist-service-image
+          docker build -t "DOCKER_USER"/playlist-service-image ./playlist-service
+          docker push "DOCKER_USER"/playlist-service-image
 
       # Stap 5: Start de applicatie met Docker Compose
       - name: Deploy with Docker Compose
