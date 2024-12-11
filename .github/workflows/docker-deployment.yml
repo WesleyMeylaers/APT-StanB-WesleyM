@@ -13,6 +13,11 @@ jobs:
     # Stap 1: Checkout de code
     - name: Checkout code
       uses: actions/checkout@v3
+      # tussenstap
+    - name: Install Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install docker-compose-plugin -y
 
     # Stap 2: Installeer Docker Compose
     - name: Set up Docker Compose
