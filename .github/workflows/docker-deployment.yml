@@ -13,6 +13,10 @@ jobs:
     # Stap 1: Checkout de code
     - name: Checkout code
       uses: actions/checkout@v3
+    # Verwijder oude Docker-versies
+    - name: Remove old Docker versions
+      run: |
+        sudo apt-get remove -y docker docker-engine docker.io containerd runc || true
 
     # Stap 2: Installeer Docker Compose
     - name: Install Docker Compose
