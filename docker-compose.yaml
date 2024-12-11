@@ -1,42 +1,54 @@
-version: '3.8'
+name: Build and Deploy Docker Containers
 
-services:
-  api-gateway:
-    image: api-gateway-image
-    build:
-      context: ./api-gateway
-    ports:
-      - "8083:8083"
-    depends_on:
-      - user-service
-      - artist-service
-      - album-service
-      - playlist-service
+on:
+  push:
+    branches:
+      - main
 
-  user-service:
-    image: user-service-image
-    build:
-      context: ./user-service
-    ports:
-      - "8080:8080"
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Stap 1: Checkout de code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  artist-service:
-    image: artist-service-image
-    build:
-      context: ./artist-service
-    ports:
-      - "8081:8081"
+      # Stap 2: Installeer Docker
+      - name: Install Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          docker --version
 
-  album-service:
-    image: album-service-image
-    build:
-      context: ./album-service
-    ports:
-      - "8082:8082"
+      # Stap 3: Log in bij Docker Hub
+      - name: Docker Login
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
 
-  playlist-service:
-    image: playlist-service-image
-    build:
-      context: ./playlist-service
-    ports:
-      - "8084:8084"
+      # Stap 4: Bouw en push alle services
+      - name: Build and Push Services
+        run: |
+          # Bouw en push api-gateway
+          docker build -t ${{ secrets.DOCKER_USER }}/api-gateway-image ./api-gateway
+          docker push ${{ secrets.DOCKER_USER }}/api-gateway-image
+
+          # Bouw en push user-service
+          docker build -t ${{ secrets.DOCKER_USER }}/user-service-image ./user-service
+          docker push ${{ secrets.DOCKER_USER }}/user-service-image
+
+          # Bouw en push artist-service
+          docker build -t ${{ secrets.DOCKER_USER }}/artist-service-image ./artist-service
+          docker push ${{ secrets.DOCKER_USER }}/artist-service-image
+
+          # Bouw en push album-service
+          docker build -t ${{ secrets.DOCKER_USER }}/album-service-image ./album-service
+          docker push ${{ secrets.DOCKER_USER }}/album-service-image
+
+          # Bouw en push playlist-service
+          docker build -t ${{ secrets.DOCKER_USER }}/playlist-service-image ./playlist-service
+          docker push ${{ secrets.DOCKER_USER }}/playlist-service-image
+
+      # Stap 5: Start de applicatie met Docker Compose
+      - name: Deploy with Docker Compose
+        run: |
+          docker-compose down || true
+          docker-compose up -d
