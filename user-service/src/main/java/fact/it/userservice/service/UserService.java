@@ -16,22 +16,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    @PostConstruct
-    public void loadData() {
-        if (userRepository.count() == 0) {
-            User user1 = new User();
-            user1.setUsername("johndoe");
-            user1.setEmail("johndoe@example.com");
-
-            User user2 = new User();
-            user2.setUsername("janedoe");
-            user2.setEmail("janedoe@example.com");
-
-            userRepository.save(user1);
-            userRepository.save(user2);
-        }
-    }
-
     @Transactional(readOnly = true)
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll().stream()
