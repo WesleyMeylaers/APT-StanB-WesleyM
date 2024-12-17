@@ -20,7 +20,7 @@ public class Album {
     private String id;
     private String title;
     private String artist;
-    private Date releaseDate;
+
     private String label;
     private List<String> trackList;
 }

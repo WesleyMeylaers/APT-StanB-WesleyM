@@ -21,7 +21,6 @@ public class AlbumService {
                         .id(album.getId())
                         .title(album.getTitle())
                         .artist(album.getArtist())
-                        .releaseDate(album.getReleaseDate())
                         .label(album.getLabel())
                         .trackList(album.getTrackList())
                         .build())
@@ -32,7 +31,6 @@ public class AlbumService {
         Album album = Album.builder()
                 .title(albumRequest.getTitle())
                 .artist(albumRequest.getArtist())
-                .releaseDate(albumRequest.getReleaseDate())
                 .label(albumRequest.getLabel())
                 .trackList(albumRequest.getTrackList())
                 .build();

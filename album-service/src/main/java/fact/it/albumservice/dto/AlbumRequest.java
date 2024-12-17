@@ -13,7 +13,7 @@ import java.util.List;
 public class AlbumRequest {
     private String title;
     private String artist;
-    private Date releaseDate;
+
     private String label;
     private List<String> trackList;
 }
