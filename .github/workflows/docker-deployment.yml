@@ -22,13 +22,13 @@ jobs:
         run: mvn package -B
 
       - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u meywe -p Lamborghini2004
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/ede-service-registry:latest ./service-registry
+        run: docker build -t meywe/ede-service-registry:latest ./service-registry
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/ede-service-registry:latest
+        run: docker push meywe/ede-service-registry:latest
 
   artistService:
     runs-on: ubuntu-latest
@@ -49,13 +49,13 @@ jobs:
         run: mvn package -B
 
       - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u meywe -p Lamborghini2004
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/ede-notification-service:latest ./notification-service
+        run: docker build -t meywe/ede-notification-service:latest ./notification-service
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/ede-notification-service:latest
+        run: docker push meywe/ede-notification-service:latest
 
   playlistService:
     runs-on: ubuntu-latest
@@ -76,13 +76,13 @@ jobs:
         run: mvn package -B
 
       - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u meywe -p Lamborghini2004
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/ede-user-service:latest ./user-service
+        run: docker build -t meywe/ede-user-service:latest ./user-service
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/ede-user-service:latest
+        run: docker push meywe/ede-user-service:latest
 
   userService:
     runs-on: ubuntu-latest
@@ -103,13 +103,13 @@ jobs:
         run: mvn package -B
 
       - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u meywe -p Lamborghini2004
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/ede-appointment-service:latest ./appointment-service
+        run: docker build -t meywe/ede-appointment-service:latest ./appointment-service
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/ede-appointment-service:latest
+        run: docker push meywe/ede-appointment-service:latest
 
   apiGateway:
     runs-on: ubuntu-latest
@@ -130,10 +130,10 @@ jobs:
         run: mvn package -B
 
       - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u meywe -p Lamborghini2004
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/ede-api-gateway:latest ./api-gateway
+        run: docker build -t meywe/ede-api-gateway:latest ./api-gateway
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/ede-api-gateway:latest
+        run: docker push meywe/ede-api-gateway:latest
