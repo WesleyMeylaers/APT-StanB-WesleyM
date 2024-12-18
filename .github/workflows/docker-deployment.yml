@@ -21,7 +21,7 @@ jobs:
         run: mvn package -B
 
       - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u meywe -p Lamborghini2004
 
       - name: Docker Build
         run: docker build -t ${{ secrets.DOCKER_USER }}/ede-album-service:latest ./album-service
@@ -48,7 +48,7 @@ jobs:
         run: mvn package -B
 
       - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u meywe -p Lamborghini2004
 
       - name: Docker Build
         run: docker build -t ${{ secrets.DOCKER_USER }}/ede-user-service:latest ./user-service
@@ -75,7 +75,7 @@ jobs:
         run: mvn package -B
 
       - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u meywe -p Lamborghini2004
 
       - name: Docker Build
         run: docker build -t ${{ secrets.DOCKER_USER }}/ede-artist-service:latest ./artist-service
@@ -102,7 +102,7 @@ jobs:
         run: mvn package -B
 
       - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u meywe -p Lamborghini2004
 
       - name: Docker Build
         run: docker build -t ${{ secrets.DOCKER_USER }}/ede-playlist-service:latest ./playlist-service
@@ -129,7 +129,7 @@ jobs:
         run: mvn package -B
 
       - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u meywe -p Lamborghini2004
 
       - name: Docker Build
         run: docker build -t ${{ secrets.DOCKER_USER }}/ede-api-gateway:latest ./api-gateway
