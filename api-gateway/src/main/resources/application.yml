@@ -13,28 +13,28 @@ spring:
     gateway:
       routes:
         - id: user-service
-          uri: http://${USER_SERVICE_BASEURL:localhost:8080}
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
           predicates:
             - Path=/user
             - Method=GET
           filters:
-            - SetPath=/api/user
+            - SetPath=/api/users
 
         - id: artist-service
-          uri: http://${ARTIST_SERVICE_BASEURL:localhost:8081}
+          uri: http://${ARTIST_SERVICE_BASEURL:localhost:8082}
           predicates:
             - Path=/artist
             - Method=GET
           filters:
-            - SetPath=/api/artist
+            - SetPath=/api/artists
 
         - id: album-service
-          uri: http://${ALBUM_SERVICE_BASEURL:localhost:8082}
+          uri: http://${ALBUM_SERVICE_BASEURL:localhost:8083}
           predicates:
             - Path=/album
             - Method=GET
           filters:
-            - SetPath=/api/album
+            - SetPath=/api/albums
 
         - id: playlist-service
           uri: http://${PLAYLIST_SERVICE_BASEURL:localhost:8084}
@@ -42,5 +42,5 @@ spring:
             - Path=/playlist
             - Method=GET
           filters:
-            - SetPath=/api/playlist
+            - SetPath=/api/playlists
 

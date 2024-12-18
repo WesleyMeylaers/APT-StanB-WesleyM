@@ -14,7 +14,7 @@ public class SecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
         serverHttpSecurity
                 .authorizeExchange(exchange ->
-                        exchange.pathMatchers("/user/**", "/artist/**", "/album/**", "/playlist/**")
+                        exchange.pathMatchers("/user", "/artist", "/album", "/playlist")
                                 .permitAll()  // Open toegang voor alle paden
                                 .anyExchange()
                                 .permitAll()  // Ook alle andere eindpunten open

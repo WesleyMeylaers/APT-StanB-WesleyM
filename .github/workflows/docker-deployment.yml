@@ -1,7 +1,7 @@
 name: Build and deliver containers
 
 on: push
-
+#secrets naar env
 jobs:
   albumService:
     runs-on: ubuntu-latest
