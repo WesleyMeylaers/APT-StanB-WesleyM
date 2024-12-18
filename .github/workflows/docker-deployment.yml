@@ -24,14 +24,14 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ env.DOCKER_USER }}
+          password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/ede-album-service:latest ./album-service
+        run: docker build -t ${{ env.DOCKER_USER }}/ede-album-service:latest ./album-service
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/ede-album-service:latest
+        run: docker push ${{ env.DOCKER_USER }}/ede-album-service:latest
 
   userService:
     runs-on: ubuntu-latest
@@ -54,14 +54,14 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ env.DOCKER_USER }}
+          password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/ede-user-service:latest ./user-service
+        run: docker build -t ${{ env.DOCKER_USER }}/ede-user-service:latest ./user-service
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/ede-user-service:latest
+        run: docker push ${{ env.DOCKER_USER }}/ede-user-service:latest
 
   artistService:
     runs-on: ubuntu-latest
@@ -84,14 +84,14 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ env.DOCKER_USER }}
+          password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/ede-artist-service:latest ./artist-service
+        run: docker build -t ${{ env.DOCKER_USER }}/ede-artist-service:latest ./artist-service
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/ede-artist-service:latest
+        run: docker push ${{ env.DOCKER_USER }}/ede-artist-service:latest
 
   playlistService:
     runs-on: ubuntu-latest
@@ -114,14 +114,14 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ env.DOCKER_USER }}
+          password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/ede-playlist-service:latest ./playlist-service
+        run: docker build -t ${{ env.DOCKER_USER }}/ede-playlist-service:latest ./playlist-service
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/ede-playlist-service:latest
+        run: docker push ${{ env.DOCKER_USER }}/ede-playlist-service:latest
 
   apiGateway:
     runs-on: ubuntu-latest
@@ -144,11 +144,11 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ env.DOCKER_USER }}
+          password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/ede-api-gateway:latest ./api-gateway
+        run: docker build -t ${{ env.DOCKER_USER }}/ede-api-gateway:latest ./api-gateway
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/ede-api-gateway:latest
+        run: docker push ${{ env.DOCKER_USER }}/ede-api-gateway:latest
