@@ -20,11 +20,8 @@ jobs:
         working-directory: ./album-service
         run: mvn package -B
 
-      - name: Docker Login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ env.DOCKER_USER }}
-          password: ${{ env.DOCKER_PASSWORD }}
+      - name: Docker login
+        run: docker login -u ${{ env.DOCKER_USER }} -p ${{ env.DOCKER_PASSWORD }}
 
       - name: Docker Build
         run: docker build -t ${{ env.DOCKER_USER }}/ede-album-service:latest ./album-service
@@ -50,11 +47,8 @@ jobs:
         working-directory: ./user-service
         run: mvn package -B
 
-      - name: Docker Login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ env.DOCKER_USER }}
-          password: ${{ env.DOCKER_PASSWORD }}
+      - name: Docker login
+        run: docker login -u ${{ env.DOCKER_USER }} -p ${{ env.DOCKER_PASSWORD }}
 
       - name: Docker Build
         run: docker build -t ${{ env.DOCKER_USER }}/ede-user-service:latest ./user-service
@@ -80,11 +74,8 @@ jobs:
         working-directory: ./artist-service
         run: mvn package -B
 
-      - name: Docker Login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ env.DOCKER_USER }}
-          password: ${{ env.DOCKER_PASSWORD }}
+      - name: Docker login
+        run: docker login -u ${{ env.DOCKER_USER }} -p ${{ env.DOCKER_PASSWORD }}
 
       - name: Docker Build
         run: docker build -t ${{ env.DOCKER_USER }}/ede-artist-service:latest ./artist-service
@@ -110,11 +101,8 @@ jobs:
         working-directory: ./playlist-service
         run: mvn package -B
 
-      - name: Docker Login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ env.DOCKER_USER }}
-          password: ${{ env.DOCKER_PASSWORD }}
+      - name: Docker login
+        run: docker login -u ${{ env.DOCKER_USER }} -p ${{ env.DOCKER_PASSWORD }}
 
       - name: Docker Build
         run: docker build -t ${{ env.DOCKER_USER }}/ede-playlist-service:latest ./playlist-service
@@ -140,11 +128,8 @@ jobs:
         working-directory: ./api-gateway
         run: mvn package -B
 
-      - name: Docker Login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ env.DOCKER_USER }}
-          password: ${{ env.DOCKER_PASSWORD }}
+      - name: Docker login
+        run: docker login -u ${{ env.DOCKER_USER }} -p ${{ env.DOCKER_PASSWORD }}
 
       - name: Docker Build
         run: docker build -t ${{ env.DOCKER_USER }}/ede-api-gateway:latest ./api-gateway
