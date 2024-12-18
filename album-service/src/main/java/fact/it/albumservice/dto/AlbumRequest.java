@@ -1,6 +1,7 @@
 package fact.it.albumservice.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class AlbumRequest {
@@ -16,4 +18,5 @@ public class AlbumRequest {
 
     private String label;
     private List<String> trackList;
+
 }

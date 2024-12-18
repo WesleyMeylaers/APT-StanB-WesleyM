@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    image: sb-wm/ede-api-gateway
+    ports:
+      - "8085:8085"
+    depends_on:
+      - user-service
+      - artist-service
+      - album-service
+      - playlist-service
+    environment:
+      USER_SERVICE_BASEURL: http://user-service:8081
+      ARTIST_SERVICE_BASEURL: http://artist-service:8082
+      ALBUM_SERVICE_BASEURL: http://album-service:8083
+      PLAYLIST_SERVICE_BASEURL: http://playlist-service:8084
+    links:
+      - user-service
+      - artist-service
+      - album-service
+      - playlist-service
+
+  user-service:
+    image: user-service:latest
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql-user
+    environment:
+      DATABASE_URL: mysql://root:root@mysql-user:3306/userdb
+
+  artist-service:
+    image: artist-service:latest
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mongo-artist
+    environment:
+      DATABASE_URL: mongodb://mongo-artist:27017/artistdb
+
+  album-service:
+    image: album-service:latest
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mongo-album
+    environment:
+      DATABASE_URL: mongodb://mongo-album:27017/albumdb
+
+  playlist-service:
+    image: playlist-service:latest
+    ports:
+      - "8084:8084"
+    depends_on:
+      - mongo-playlist
+    environment:
+      DATABASE_URL: mongodb://mongo-playlist:27017/playlistdb
+
+  mysql-user:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: userdb
+    volumes:
+      - mysql_user_data:/var/lib/mysql
+
+  mongo-artist:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_artist_data:/data/db
+
+  mongo-album:
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_album_data:/data/db
+
+  mongo-playlist:
+    image: mongo:latest
+    ports:
+      - "27019:27017"
+    volumes:
+      - mongodb_playlist_data:/data/db
+
+volumes:
+  mysql_user_data:
+  mongodb_artist_data:
+  mongodb_album_data:
+  mongodb_playlist_data:
