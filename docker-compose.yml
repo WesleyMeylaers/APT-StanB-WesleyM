@@ -2,9 +2,9 @@ version: '3.8'
 
 services:
   api-gateway:
-    image: sb-wm/ede-api-gateway
+    image: meywe/ede-api-gateway
     ports:
-      - "8085:8085"
+      - "8080:8080"
     depends_on:
       - user-service
       - artist-service
@@ -22,7 +22,7 @@ services:
       - playlist-service
 
   user-service:
-    image: user-service:latest
+    image: meywe/ede-user-service
     ports:
       - "8081:8081"
     depends_on:
@@ -31,7 +31,7 @@ services:
       DATABASE_URL: mysql://root:root@mysql-user:3306/userdb
 
   artist-service:
-    image: artist-service:latest
+    image: meywe/ede-artist-service
     ports:
       - "8082:8082"
     depends_on:
@@ -40,7 +40,7 @@ services:
       DATABASE_URL: mongodb://mongo-artist:27017/artistdb
 
   album-service:
-    image: album-service:latest
+    image: meywe/ede-album-service
     ports:
       - "8083:8083"
     depends_on:
@@ -49,7 +49,7 @@ services:
       DATABASE_URL: mongodb://mongo-album:27017/albumdb
 
   playlist-service:
-    image: playlist-service:latest
+    image: meywe/ede-playlist-service
     ports:
       - "8084:8084"
     depends_on:
