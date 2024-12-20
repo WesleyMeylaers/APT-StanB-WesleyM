@@ -28,7 +28,11 @@ services:
     depends_on:
       - mysql-user
     environment:
-      DATABASE_URL: mysql://root:root@mysql-user:3307/userdb
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-user:3306/userdb?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
 
   artist-service:
     image: meywe/ede-artist-service
@@ -66,7 +70,6 @@ services:
       MYSQL_DATABASE: userdb
     volumes:
       - mysql_user_data:/var/lib/mysql
-
 
   mongo-artist:
     image: mongo:latest
