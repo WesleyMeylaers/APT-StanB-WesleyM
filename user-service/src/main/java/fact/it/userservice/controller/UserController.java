@@ -1,53 +1,62 @@
-package fact.it.userservice.controller;
+package fact.it.userservice.service;
 
-import fact.it.userservice.dto.UserResponse;
 import fact.it.userservice.dto.UserRequest;
-import fact.it.userservice.service.UserService;
+import fact.it.userservice.dto.UserResponse;
+import fact.it.userservice.model.User;
+import fact.it.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping("/api/users")
+@Service
 @RequiredArgsConstructor
-public class UserController {
+public class UserService {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
-    // http://localhost:8081/api/users
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<UserResponse> getAllUsers() {
-        return userService.getAllUsers();
+        return userRepository.findAll().stream()
+                .map(this::mapToUserResponse)
+                .collect(Collectors.toList());
     }
 
-    // http://localhost:8081/api/users/{id}
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public UserResponse getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public UserResponse getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return mapToUserResponse(user);
     }
 
-    // http://localhost:8081/api/users
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public UserResponse createUser(@RequestBody UserRequest userRequest) {
-        return userService.createUser(userRequest);
+    public UserResponse createUser(UserRequest userRequest) {
+        User user = new User();
+        user.setName(userRequest.getName());
+        user.setEmail(userRequest.getEmail());
+        userRepository.save(user);
+        return mapToUserResponse(user);
     }
 
-    // http://localhost:8081/api/users/{id}
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public UserResponse updateUser(@PathVariable Long id, @RequestBody UserRequest userRequest) {
-        return userService.updateUser(id, userRequest);
+    public UserResponse updateUser(Long id, UserRequest userRequest) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setName(userRequest.getName());
+        user.setEmail(userRequest.getEmail());
+        userRepository.save(user);
+        return mapToUserResponse(user);
     }
 
-    // http://localhost:8081/api/users/{id}
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new RuntimeException("User not found");
+        }
+        userRepository.deleteById(id);
+    }
+
+    private UserResponse mapToUserResponse(User user) {
+        return UserResponse.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .build();
     }
 }
