@@ -73,22 +73,16 @@ services:
 
   mongo-artist:
     image: mongo:latest
-    ports:
-      - "27017:27017"
     volumes:
       - mongodb_artist_data:/data/db
 
   mongo-album:
     image: mongo:latest
-    ports:
-      - "27017:27018"
     volumes:
       - mongodb_album_data:/data/db
 
   mongo-playlist:
     image: mongo:latest
-    ports:
-      - "27017:27019"
     volumes:
       - mongodb_playlist_data:/data/db
 
