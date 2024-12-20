@@ -29,7 +29,7 @@ spring:
           uri: http://${USER_SERVICE_BASEURL:localhost:8081}
           predicates:
             - Path=/user
-            - Method=GET
+            - Method=GET,POST
           filters:
             - SetPath=/api/users
 
@@ -37,7 +37,7 @@ spring:
           uri: http://${ARTIST_SERVICE_BASEURL:localhost:8082}
           predicates:
             - Path=/artist
-            - Method=GET
+            - Method=GET,POST
           filters:
             - SetPath=/api/artists
 
@@ -45,7 +45,7 @@ spring:
           uri: http://${ALBUM_SERVICE_BASEURL:localhost:8083}
           predicates:
             - Path=/album
-            - Method=GET
+            - Method=GET,POST
           filters:
             - SetPath=/api/albums
 
@@ -53,6 +53,6 @@ spring:
           uri: http://${PLAYLIST_SERVICE_BASEURL:localhost:8084}
           predicates:
             - Path=/playlist
-            - Method=GET
+            - Method=GET,POST
           filters:
             - SetPath=/api/playlists
