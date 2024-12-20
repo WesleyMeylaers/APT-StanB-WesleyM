@@ -28,7 +28,7 @@ services:
     depends_on:
       - mysql-user
     environment:
-      DATABASE_URL: mysql://root:root@mysql-user:3306/userdb
+      DATABASE_URL: mysql://root:root@mysql-user:3307/userdb
 
   artist-service:
     image: meywe/ede-artist-service
@@ -60,12 +60,13 @@ services:
   mysql-user:
     image: mysql:latest
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: userdb
     volumes:
       - mysql_user_data:/var/lib/mysql
+
 
   mongo-artist:
     image: mongo:latest
