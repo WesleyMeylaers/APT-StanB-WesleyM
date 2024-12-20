@@ -11,10 +11,10 @@ services:
       - album-service
       - playlist-service
     environment:
-      USER_SERVICE_BASEURL: http://user-service:8081
-      ARTIST_SERVICE_BASEURL: http://artist-service:8082
-      ALBUM_SERVICE_BASEURL: http://album-service:8083
-      PLAYLIST_SERVICE_BASEURL: http://playlist-service:8084
+      USER_SERVICE_BASEURL: user-service:8081
+      ARTIST_SERVICE_BASEURL: artist-service:8082
+      ALBUM_SERVICE_BASEURL: album-service:8083
+      PLAYLIST_SERVICE_BASEURL: playlist-service:8084
     links:
       - user-service
       - artist-service
