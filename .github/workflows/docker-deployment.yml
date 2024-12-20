@@ -134,5 +134,8 @@ jobs:
       - name: Docker Build
         run: docker build -t ${{ secrets.DOCKER_USER }}/ede-api-gateway:latest ./api-gateway
 
+      - name: Google Build
+        run: docker build --build-arg GOOGLE_CLIENT_ID=${{secrets.GOOGLE_CLIENT_ID}} --build-arg GOOGLE_CLIENT_SECRET=${{secrets.GOOGLE_CLIENT_SECRET}}
+
       - name: Upload container to Docker Hub with Push
         run: docker push ${{ secrets.DOCKER_USER }}/ede-api-gateway:latest

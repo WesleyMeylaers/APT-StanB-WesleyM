@@ -17,9 +17,9 @@ public class SecurityConfig {
         serverHttpSecurity
                 .authorizeExchange(exchange ->
                         exchange.pathMatchers(HttpMethod.GET,"/user", "/artist", "/album", "/playlist")
-                                .permitAll()  // Open toegang voor alle paden
+                                .permitAll()
                                 .anyExchange()
-                                .permitAll()  // Ook alle andere eindpunten open
+                                .permitAll()
                 )
                 .oauth2ResourceServer(oauth2->oauth2.jwt(Customizer.withDefaults()));
 
