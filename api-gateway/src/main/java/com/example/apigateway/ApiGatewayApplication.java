@@ -9,12 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 public class ApiGatewayApplication {
 
     public static void main(String[] args) {
-        // Load .env variables
-        Dotenv dotenv = Dotenv.configure().load();
-
-        // Make environment variables available to Spring
-        dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
-
         SpringApplication.run(ApiGatewayApplication.class, args);
     }
 }
