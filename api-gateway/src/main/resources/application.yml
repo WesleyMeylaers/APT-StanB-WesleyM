@@ -29,9 +29,17 @@ spring:
           uri: http://${USER_SERVICE_BASEURL:localhost:8081}
           predicates:
             - Path=/user
-            - Method=GET,POST,PUT,DELETE
+            - Method=GET,POST
           filters:
             - SetPath=/api/users
+
+        - id: user-service-update-delete
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/user{id}
+            - Method=PUT,DELETE
+          filters:
+            - SetPath=/api/users/{id}
 
         - id: artist-service
           uri: http://${ARTIST_SERVICE_BASEURL:localhost:8082}
