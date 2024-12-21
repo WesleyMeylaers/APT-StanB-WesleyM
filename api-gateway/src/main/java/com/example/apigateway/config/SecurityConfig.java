@@ -20,9 +20,9 @@ public class SecurityConfig {
                                 .pathMatchers(HttpMethod.POST, "/user", "/artist", "/album", "/playlist").permitAll()
                                 .pathMatchers(HttpMethod.PUT, "/user").permitAll()
                                 .pathMatchers(HttpMethod.DELETE, "/user").permitAll()
-                                .anyExchange().authenticated()
-                )
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+                               // .anyExchange().authenticated()
+                );
+                //.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
 
         return serverHttpSecurity.build();
