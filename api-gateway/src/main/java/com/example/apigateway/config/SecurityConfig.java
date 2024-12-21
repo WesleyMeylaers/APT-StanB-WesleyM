@@ -3,6 +3,7 @@ package com.example.apigateway.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -15,15 +16,12 @@ public class SecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
         serverHttpSecurity
                 .authorizeExchange(exchange ->
-                                exchange.pathMatchers(HttpMethod.GET, "/user", "/artist", "/album", "/playlist").permitAll()
-                                        .pathMatchers(HttpMethod.POST, "/user", "/artist", "/album", "/playlist").permitAll()
-                                        .pathMatchers(HttpMethod.PUT, "/user").permitAll()
-                                        .pathMatchers(HttpMethod.DELETE, "/user").permitAll()
-                        // Uncomment below if authentication is needed
-                        // .anyExchange().authenticated()
-                );
-        // Uncomment below if OAuth2 authentication is needed
-        // .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+                        exchange.pathMatchers(HttpMethod.GET,"/user", "/artist", "/album", "/playlist")
+                                .permitAll()
+                                .anyExchange()
+                                .permitAll()
+                )
+                .oauth2ResourceServer(oauth2->oauth2.jwt(Customizer.withDefaults()));
 
         return serverHttpSecurity.build();
     }
