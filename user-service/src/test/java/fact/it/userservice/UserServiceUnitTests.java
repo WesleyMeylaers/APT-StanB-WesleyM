@@ -1,5 +1,6 @@
 package fact.it.userservice;
 
+import fact.it.userservice.dto.UserRequest;
 import fact.it.userservice.dto.UserResponse;
 import fact.it.userservice.model.User;
 import fact.it.userservice.repository.UserRepository;
@@ -77,4 +78,59 @@ public class UserServiceUnitTests {
         assertEquals("User not found", exception.getMessage());
         verify(userRepository, times(1)).findById(1L);
     }
+    @Test
+    public void testCreateUser() {
+        // Arrange
+        User user = new User(1L, "newuser", "newuser@example.com");
+        when(userRepository.save(any(User.class))).thenReturn(user);
+
+        // Act
+        UserResponse result = userService.createUser(new UserRequest("newuser", "newuser@example.com"));
+
+        // Assert
+        assertNotNull(result);
+        assertEquals("newuser", result.getUsername());
+        verify(userRepository, times(1)).save(any(User.class));
+    }
+
+    @Test
+    public void testUpdateUser_Success() {
+        // Arrange
+        User existingUser = new User(1L, "olduser", "olduser@example.com");
+        User updatedUser = new User(1L, "updateduser", "updateduser@example.com");
+        when(userRepository.findById(1L)).thenReturn(Optional.of(existingUser));
+        when(userRepository.save(any(User.class))).thenReturn(updatedUser);
+
+        // Act
+        UserResponse result = userService.updateUser(1L, new UserRequest("updateduser", "updateduser@example.com"));
+
+        // Assert
+        assertNotNull(result);
+        assertEquals("updateduser", result.getUsername());
+        verify(userRepository, times(1)).save(any(User.class));
+    }
+
+    @Test
+    public void testDeleteUser_Success() {
+        // Arrange
+        when(userRepository.existsById(1L)).thenReturn(true);
+
+        // Act
+        userService.deleteUser(1L);
+
+        // Assert
+        verify(userRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    public void testDeleteUser_NotFound() {
+        // Arrange
+        when(userRepository.existsById(1L)).thenReturn(false);
+
+        // Act & Assert
+        Exception exception = assertThrows(RuntimeException.class, () -> userService.deleteUser(1L));
+        assertEquals("User not found", exception.getMessage());
+        verify(userRepository, never()).deleteById(anyLong());
+    }
+
 }
