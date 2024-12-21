@@ -16,12 +16,14 @@ public class SecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
         serverHttpSecurity
                 .authorizeExchange(exchange ->
-                        exchange.pathMatchers(HttpMethod.GET,"/user", "/artist", "/album", "/playlist")
-                                .permitAll()
-                                .anyExchange()
-                                .permitAll()
+                        exchange.pathMatchers(HttpMethod.GET, "/user", "/artist", "/album", "/playlist").permitAll()
+                                .pathMatchers(HttpMethod.POST, "/user", "/artist", "/album", "/playlist").permitAll()
+                                .pathMatchers(HttpMethod.PUT, "/user").permitAll()
+                                .pathMatchers(HttpMethod.DELETE, "/user").permitAll()
+                                .anyExchange().authenticated()
                 )
-                .oauth2ResourceServer(oauth2->oauth2.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+
 
         return serverHttpSecurity.build();
     }
